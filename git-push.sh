@@ -1,7 +1,7 @@
 echo "tracker updated"
 read message
 git add .
-git commit -m"${message}"
+git commit -m"updated" 
 if [ -n "$(git status - porcelain)" ];
 then
  echo "IT IS CLEAN"
@@ -10,3 +10,4 @@ else
  echo "Pushing data to server!!!"
  git push -u origin master
 fi
+-m"${message}"

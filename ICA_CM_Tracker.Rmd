@@ -1,0 +1,156 @@
+---
+title: "What we are reading"
+#author: "Document Author"
+date: "Updated on `r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+## Top 100 URLs most shared by @ICA_CM's friends
+```{css echo=FALSE}
+/* Styles for the table container, title, and subtitle */
+
+.ica-cm-tracker {
+  /* Center the table */
+  margin: 0 auto;
+  /* Reduce the table width */
+  width: 900px;
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.followers-header {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.followers-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Styles for the table */
+.followers-tbl {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.followers-tbl a {
+  color: inherit;
+}
+
+/* Styles for the column headers */
+.header {
+  border-bottom: 2px solid #555;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.header:hover {
+  background-color: #eee;
+}
+
+/* Styles for the bar charts */
+.bar-cell {
+  display: flex;
+  align-items: center;
+}
+
+.number {
+  font-family: "Fira Mono", Consolas, Monaco, monospace;
+  font-size: 13.5px;
+  white-space: pre;
+}
+
+.bar-chart {
+  flex-grow: 1;
+  margin-left: 6px;
+  height: 14px;
+}
+
+.bar {
+  height: 100%;
+}
+
+```
+
+```{r echo=FALSE}
+load(file="link.rda")
+library(reactable)
+library(htmltools)
+
+# Render a bar chart with a label on the left
+bar_chart <- function(label, width = "100%", height = "14px", fill = "#00bfc4", background = NULL) {
+  bar <- div(style = list(background = fill, width = width, height = height))
+  chart <- div(style = list(flexGrow = 1, marginLeft = "6px", background = background), bar)
+  div(style = list(display = "flex", alignItems = "center"), label, chart)
+}
+
+tbl <- reactable(
+  link,
+  pagination = TRUE,
+  defaultSorted = "retweet_count",
+  columns = list(
+    text = colDef(
+      name = "Tweet content",
+      format = colFormat(prefix = "")
+    ),
+    urls_expanded_url = colDef(
+      cell = function(value) {
+        url <- value
+        tags$a(href = url, target = "_blank", value)
+      },
+      align = "left",
+      style = list(fontFamily = "monospace", whiteSpace = "pre"),
+      width = 350
+    ),
+    retweet_count = colDef(
+      name = "Retweet count",
+      defaultSortOrder = "desc",
+      # Render the bar charts using a custom cell render function
+      cell = function(value) {
+        width <- paste0(value * 200 / max(link$retweet_count), "%")
+        # Add thousands separators
+        value <- format(value, big.mark = ",")
+        bar_chart(value, width = width, fill = "#3fc1c9")
+      },
+      # And left-align the columns
+      align = "left",
+      style = list(fontFamily = "monospace", whiteSpace = "pre"),
+      width = 150
+    ),
+    favorite_count = colDef(
+      name = "Favorite count",
+      defaultSortOrder = "desc",
+      # Render the bar charts using a custom cell render function
+      cell = function(value) {
+        width <- paste0(value * 200 / max(link$favorite_count), "%")
+        # Add thousands separators
+        value <- format(value, big.mark = ",")
+        bar_chart(value, width = width, fill = "#fc5185")
+      },
+      align = "left",
+      style = list(fontFamily = "monospace", whiteSpace = "pre"),
+      width = 150
+    ),
+    text = colDef(
+      name = "Tweet content",
+      align = "left",
+      style = list(fontFamily = "monospace", whiteSpace = "pre"),
+      width = 300
+      
+      )
+  )
+)
+
+#tbl
+div(class = "ica-cm-tracker",
+    div(class = "followers-header",
+    ),
+    tbl
+)
+
+
+```
+
