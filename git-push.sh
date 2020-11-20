@@ -1,13 +1,12 @@
-echo "tracker updated"
+#!/bin/sh
+cd /home/curiositybits/icacmtracker/icacmtracker-public
+
 read message
-git add .
-git commit -m"updated" 
-if [ -n "$(git status - porcelain)" ];
-then
- echo "IT IS CLEAN"
-else
- git status
- echo "Pushing data to server!!!"
- git push -u origin master
-fi
--m"${message}"
+git add *
+
+timestamp(){
+   date +"%d.%m.%Y um %H:%M"
+}
+git commit -am "Auto Server Commit $(timestamp)"
+
+git push
