@@ -76,7 +76,7 @@ output:
 ```
 
 ```{r echo=FALSE}
-load(file="link.rda")
+load(file="/home/curiositybits/icacmtracker/icacmtracker-public/link.rda")
 library(reactable)
 library(htmltools)
 
