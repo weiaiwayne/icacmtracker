@@ -1,13 +1,12 @@
 ---
-title: "What we are reading"
-#author: "Document Author"
-date: "Updated on `r Sys.Date()`"
+title: "Top links shared/liked by people we follow"
+author: "@WeiaiWayne"
+date: "Updated on `r Sys.time()`"
 output:
   prettydoc::html_pretty:
     theme: architect
     highlight: github
 ---
-## Top 100 URLs most favorited by @ICA_CM's friends
 ```{css echo=FALSE}
 /* Styles for the table container, title, and subtitle */
 
@@ -154,3 +153,5 @@ div(class = "ica-cm-tracker",
 
 ```
 
+### Under the hood
+Source code can be found [here](https://github.com/weiaiwayne/icacmtracker-public). Data are updated every 12 hours through a R script that collects latest ten tweets from each user followed by @ica_cm. Tweets containing URLs are extracted and ranked by retweet count and favorite count. The table above contains top 100 most retweeted and top 100 most favorited links. This project runs on a [Raspberry Pi server](https://www.raspberrypi.org/). 
