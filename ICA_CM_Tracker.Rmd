@@ -89,7 +89,7 @@ bar_chart <- function(label, width = "100%", height = "14px", fill = "#00bfc4", 
 tbl <- reactable(
   link,
   pagination = TRUE,
-  defaultSorted = "favorite_count",
+  defaultSorted = "retweet_count",
   columns = list(
     text = colDef(
       name = "Tweet content",
