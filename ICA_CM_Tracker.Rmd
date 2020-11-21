@@ -1,6 +1,6 @@
 ---
 title: "Top links shared/liked by people we follow"
-author: "@WeiaiWayne"
+#author: "@WeiaiWayne"
 date: "Updated on `r Sys.time()`"
 output:
   prettydoc::html_pretty:
