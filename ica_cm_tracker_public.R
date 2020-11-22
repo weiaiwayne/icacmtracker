@@ -60,9 +60,14 @@ link <- link[!is.na(link$urls_expanded_url),]
 link <- link[link$urls_expanded_url !="",]
 colnames(link)
 
+
 link <- link[,c("urls_expanded_url","text","retweet_count","favorite_count")]
-link <- link[order(link$retweet_count,decreasing =TRUE),]
-link <- link[1:100,]
+link1 <- link[order(link$favorite_count,decreasing =TRUE),]
+link1 <- link1[1:100,]
+link2 <- link[order(link$retweet_count,decreasing =TRUE),]
+link2 <- link2[1:100,]
+link <- rbind(link1,link2)
+link <- link[!duplicated(link$urls_expanded_url),]
 
 save(link, file="link.rda")
 ##
